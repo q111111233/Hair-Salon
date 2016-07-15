@@ -208,7 +208,7 @@ namespace HairSalonList.objects
       SqlConnection conn = DB.Connection();
       conn.Open();
 
-      SqlCommand cmd = new SqlCommand("DELETE FROM clients WHERE client_id = @ClientId;", conn);
+      SqlCommand cmd = new SqlCommand("DELETE FROM clients WHERE id = @ClientId;", conn);
 
       SqlParameter clientIdParameter = new SqlParameter();
       clientIdParameter.ParameterName = "@ClientId";
