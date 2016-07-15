@@ -7,13 +7,16 @@
 else
 {
   <ol>
-  @foreach (var client in @Model.GetClients())
+    @foreach (var client in @Model.GetClients())
     {
-    <li>@client.GetClient() | <a href = "/clients/@client.GetId()">Edit</a> |
+    <li>
       <form action="/delete_clients/@client.GetId()" method="post">
-        <input type="hidden" name="_method" value="DELETE">
+        @client.GetClient()
+        | <a href = "/edit_clients/@client.GetId()"><button type="button">Edit</button></a>
+        | <input type="hidden" name="_method" value="DELETE">
         <button type="submit">Delete</button>
-      </form></li>
+      </form>
+    </li>
     }
   </ol>
 }
@@ -23,4 +26,4 @@ else
   <input id = "client-name" name = "client-name" type = "text">
   <button type = "submit">Add client</button>
 </form>
-<p><a href = "/">Return home</a></p>
+<h4><a href="/">Return home</a></h4>

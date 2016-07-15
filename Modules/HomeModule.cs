@@ -27,6 +27,17 @@ namespace HairSalonList
         return View["index.cshtml", Stylist.GetAll()];
       };
 
+      Get["/edit_stylists/{id}"] = parameters => {
+        Stylist SelectedStylist = Stylist.Find(parameters.id);
+        return View["stylists_edit.cshtml", SelectedStylist];
+      };
+
+      Patch["/edit_stylists/{id}"] = parameters => {
+        Stylist SelectedStylist = Stylist.Find(parameters.id);
+        SelectedStylist.Update(Request.Form["stylist-name"]);
+        return View["index.cshtml", Stylist.GetAll()];
+      };
+
       Get["/stylists/{id}"] = parameters => {
         Stylist SelectedStylist = Stylist.Find(parameters.id);
         return View["clients.cshtml", SelectedStylist];
@@ -42,6 +53,17 @@ namespace HairSalonList
       Delete["/delete_clients/{id}"] = parameters => {
         Client SelectedClient = Client.Find(parameters.id);
         SelectedClient.Delete();
+        return View["clients.cshtml", Stylist.Find(SelectedClient.GetStylistId())];
+      };
+
+      Get["/edit_clients/{id}"] = parameters => {
+        Client SelectedClient = Client.Find(parameters.id);
+        return View["clients_edit.cshtml", SelectedClient];
+      };
+
+      Patch["/edit_clients/{id}"] = parameters => {
+        Client SelectedClient = Client.Find(parameters.id);
+        SelectedClient.Update(Request.Form["client-name"]);
         return View["clients.cshtml", Stylist.Find(SelectedClient.GetStylistId())];
       };
     }
