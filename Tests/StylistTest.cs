@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System;
 using System.Data;
 using System.Data.SqlClient;
+using HairSalonList.objects;
 
 namespace HairSalonList
 {
   public class StylistTest : IDisposable
   {
-    public ToDoTest()
+    public StylistTest()
     {
       DBConfiguration.ConnectionString = "Data Source=(localdb)\\mssqllocaldb;Initial Catalog=hair_salon_test;Integrated Security=SSPI;";
     }
@@ -17,11 +18,107 @@ namespace HairSalonList
     public void Test_DatabaseEmptyAtFirst()
     {
       //Arrange, Act
-      int result = Task.GetAll().Count;
+      int result = Stylist.GetAll().Count;
 
       //Assert
       Assert.Equal(0, result);
     }
+
+    [Fact]
+    public void Test_Equal_ReturnsTrueForSameName()
+    {
+      //Arrange, Act
+      Stylist firstStylist = new Stylist("new stylist");
+      Stylist secondStylist = new Stylist("new stylist");
+
+      //Assert
+      Assert.Equal(firstStylist, secondStylist);
+    }
+
+    [Fact]
+    public void Test_Save_SavesStylistToDatabase()
+    {
+      //Arrange
+      Stylist testStylist = new Stylist("new stylist");
+      testStylist.Save();
+
+      //Act
+      List<Stylist> result = Stylist.GetAll();
+      List<Stylist> testList = new List<Stylist>{testStylist};
+
+      //Assert
+      Assert.Equal(testList, result);
+    }
+
+    [Fact]
+    public void Test_Save_AssignsIdToStylistObject()
+    {
+      //Arrange
+      Stylist testStylist = new Stylist("new stylist");
+      testStylist.Save();
+
+      //Act
+      Stylist savedStylist = Stylist.GetAll()[0];
+
+      int result = savedStylist.GetId();
+      int testId = testStylist.GetId();
+
+      //Assert
+      Assert.Equal(testId, result);
+    }
+
+    [Fact]
+    public void Test_Find_FindsStylistInDatabase()
+    {
+      //Arrange
+      Stylist testStylist = new Stylist("new stylist");
+      testStylist.Save();
+
+      //Act
+      Stylist foundStylist = Stylist.Find(testStylist.GetId());
+
+      //Assert
+      Assert.Equal(testStylist, foundStylist);
+    }
+
+    // [Fact]
+    // public void Test_GetClients_RetrievesAllClientsWithStylist()
+    // {
+    //   //Arrange
+    //   Stylist testStylist = new Stylist("new stylist");
+    //   testStylist.Save();
+    //
+    //   //Act
+    //   Client firstClient = new Client ("Mow the lawn", testStylist.GetId());
+    //   firstClient.Save();
+    //   Client secondClient = new Client("Do the dishes", testStylist.GetId());
+    //   secondClient.Save();
+    //
+    //   List<Client> testClientList = new List<Client> {firstClient, secondClient};
+    //   List<Client> resultClientList = testStylist.GetClients();
+    //
+    //   //Assert
+    //   Assert.Equal(testClientList, resultClientList);
+    //   }
+
+      [Fact]
+
+      public void Test_Update_UpdatesStylistInDatabase()
+      {
+        //Arrange
+        string name = "old stylist";
+        Stylist testStylist = new Stylist(name);
+        testStylist.Save();
+        string newName = "new stylist";
+
+        //Act
+        testStylist.Update(newName);
+
+        string result = testStylist.GetStylist();
+
+        //Assert
+        Assert.Equal(newName, result);
+      }
 
     public void Dispose()
     {
