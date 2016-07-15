@@ -9,7 +9,11 @@ else
   <ol>
   @foreach (var client in @Model.GetClients())
     {
-    <li>@client.GetClient()</li>
+    <li>@client.GetClient() | <a href = "/clients/@client.GetId()">Edit</a> |
+      <form action="/delete_clients/@client.GetId()" method="post">
+        <input type="hidden" name="_method" value="DELETE">
+        <button type="submit">Delete</button>
+      </form></li>
     }
   </ol>
 }
