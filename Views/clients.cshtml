@@ -1,0 +1,22 @@
+<h2>Here are all the clients with this stylist</h2>
+
+@if (@Model.GetClients().Count == 0)
+{
+  <p>No client have been added yet</p>
+}
+else
+{
+  <ol>
+  @foreach (var client in @Model.GetClients())
+    {
+    <li>@client.GetClient()</li>
+    }
+  </ol>
+}
+
+<form action = "/stylists/@Model.GetId()" method = "post">
+  <label for = "client-name">client name</label>
+  <input id = "client-name" name = "client-name" type = "text">
+  <button type = "submit">Add client</button>
+</form>
+<p><a href = "/">Return home</a></p>
