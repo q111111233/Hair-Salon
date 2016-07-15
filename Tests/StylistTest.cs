@@ -81,25 +81,25 @@ namespace HairSalonList
       Assert.Equal(testStylist, foundStylist);
     }
 
-    // [Fact]
-    // public void Test_GetClients_RetrievesAllClientsWithStylist()
-    // {
-    //   //Arrange
-    //   Stylist testStylist = new Stylist("new stylist");
-    //   testStylist.Save();
-    //
-    //   //Act
-    //   Client firstClient = new Client ("Mow the lawn", testStylist.GetId());
-    //   firstClient.Save();
-    //   Client secondClient = new Client("Do the dishes", testStylist.GetId());
-    //   secondClient.Save();
-    //
-    //   List<Client> testClientList = new List<Client> {firstClient, secondClient};
-    //   List<Client> resultClientList = testStylist.GetClients();
-    //
-    //   //Assert
-    //   Assert.Equal(testClientList, resultClientList);
-    //   }
+    [Fact]
+    public void Test_GetClients_RetrievesAllClientsWithStylist()
+    {
+      //Arrange
+      Stylist testStylist = new Stylist("new stylist");
+      testStylist.Save();
+
+      //Act
+      Client firstClient = new Client ("Mow the lawn", testStylist.GetId());
+      firstClient.Save();
+      Client secondClient = new Client("Do the dishes", testStylist.GetId());
+      secondClient.Save();
+
+      List<Client> testClientList = new List<Client> {firstClient, secondClient};
+      List<Client> resultClientList = testStylist.GetClients();
+
+      //Assert
+      Assert.Equal(testClientList, resultClientList);
+      }
 
     [Fact]
     public void Test_Update_UpdatesStylistInDatabase()
