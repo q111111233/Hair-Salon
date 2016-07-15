@@ -38,12 +38,12 @@ namespace HairSalonList
         return View["index.cshtml", Stylist.GetAll()];
       };
 
-      Get["/stylists/{id}"] = parameters => {
+      Get["/clients/{id}"] = parameters => {
         Stylist SelectedStylist = Stylist.Find(parameters.id);
         return View["clients.cshtml", SelectedStylist];
       };
 
-      Post["/stylists/{id}"] = parameters => {
+      Post["/clients/{id}"] = parameters => {
         Stylist SelectedStylist = Stylist.Find(parameters.id);
         Client newClient = new Client(Request.Form["client-name"], parameters.id);
         newClient.Save();
